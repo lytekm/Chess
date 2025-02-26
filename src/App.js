@@ -1,21 +1,26 @@
 import React from "react";
-import ChessBoard from "./components/board/chessBoard";
-import GameInfo from "./components/gameInfo/GameInfo";
-import GameState from "./components/board/gameState";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import HomePage from "./components/homepage/homepage";
+import GamePage from "./components/gamepage/GamePage";
+import { GameProvider } from "./components/contexts/GameContext";
 import "./assests/board.css";
 import "./assests/main.css";
 import "./assests/game-info.css";
 
 const App = () => {
-  // Create a GameState instance and pass it down to both ChessBoard and GameInfo.
-  // Alternatively, manage GameState at a higher level and pass props to both.
-  const [gameState] = React.useState(new GameState());
+  // We can still manage the game state at this level if needed.
+  const [gameState, setGameState] = useState(null);
 
   return (
-    <div className="game-container">
-      <ChessBoard gameState={gameState} />
-      <GameInfo gameState={gameState} />
-    </div>
+    <GameProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage setGameState={setGameState} />} />
+          <Route path="/game" element={<GamePage gameState={gameState} />} />
+        </Routes>
+      </Router>
+    </GameProvider>
   );
 };
 
