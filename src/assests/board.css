@@ -12,7 +12,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 60px;
+    position: relative;
   }
 
   .square:hover{
@@ -27,7 +28,72 @@
     background-color: #b58863;
   }
   
-  .selected {
+  .square.selected {
     background-color: #2171b5;
   }
+
+  .square.legalMove {
+    background-color: rgba(0, 255, 0, 0.3); /* Greenish tint for legal moves */
+  }
+  
+  .fileLabel {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    font-size: 0.3em;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .rankLabel {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 0.3em;
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  .game-info {
+    padding: 10px;
+    border-left: 2px solid #ccc;
+    width: 200px; /* adjust as needed */
+  }
+  
+  .turn-indicator {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+  }
+  
+  .timers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .timer-section {
+    font-size: 1em;
+  }
+  
+  .timer-display {
+    font-weight: bold;
+    margin-top: 4px;
+  }
+  
+  .move-history {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .winner-notification {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    text-align: center;
+  }
+  
+  
+  
+  
   

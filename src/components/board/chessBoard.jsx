@@ -1,18 +1,14 @@
-import React, { useState } from "react";
-import "../../assests/board.css"; // Create a CSS file for styling
-import "../../assests/piece.css"; // Create a CSS file for styling
-import GameState from "./gameState";
-import Piece from "../piece/piece";
+import React, { useState, useEffect } from "react";
+import "../../assests/board.css";
+import "../../assests/piece.css";
+import Square from "./Square";
 
-const ChessBoard = () => {
-  const [selectedSquare, setSelectedSquare] = useState(null);
-
-  const State = new GameState();
-  const piece = new Piece();
-
+const ChessBoard = ({ gameState }) => {
   const [currentPosition, setCurrentPosition] = useState(
-    State.getCurrentPosition()
+    gameState.getCurrentPosition()
   );
+  const [selectedSquare, setSelectedSquare] = useState(null);
+  const [legalMoves, setLegalMoves] = useState([]);
 
   const squareTitles = {
     0: "A",
@@ -25,64 +21,68 @@ const ChessBoard = () => {
     7: "H",
   };
 
-  const squareHasPiece = (squareID) => {
-    return currentPosition[squareID] !== undefined;
-  };
+  useEffect(() => {
+    gameState.setCurrentPosition(currentPosition);
+  }, [currentPosition, gameState]);
 
   const handleSquareClick = (row, col, squareID) => {
-    const selectedSquareID = selectedSquare
-      ? `${squareTitles[selectedSquare.col]}${selectedSquare.row + 1}`
-      : null;
-    if (
-      selectedSquare &&
-      selectedSquare.row === row &&
-      selectedSquare.col === col
-    ) {
-      // Clicked on the already selected square, unselect it
+    // If clicking the same square, deselect
+    if (selectedSquare && selectedSquare.squareID === squareID) {
       setSelectedSquare(null);
-    } else if (squareHasPiece(selectedSquareID)) {
-      // if the square has a piece, move the piece to the selected square
-      const newPosition = { ...currentPosition };
-      newPosition[squareID] = newPosition[selectedSquareID];
-      delete newPosition[selectedSquareID];
-      setCurrentPosition(newPosition);
-      setSelectedSquare(null);
-    } else {
-      // if no square is selected, select the square
-      setSelectedSquare({ row, col });
+      setLegalMoves([]);
+      return;
     }
-  };
 
-  const isSquareSelected = (row, col) => {
-    return (
-      selectedSquare && selectedSquare.row === row && selectedSquare.col === col
-    );
+    // If a square is already selected and the clicked square is a legal move
+    if (selectedSquare && legalMoves.includes(squareID)) {
+      // Use the GameState's makeMove method so that castling logic is executed.
+      const moveMade = gameState.makeMove(selectedSquare.squareID, squareID);
+      if (moveMade) {
+        setCurrentPosition({ ...gameState.getCurrentPosition() });
+      }
+      setSelectedSquare(null);
+      setLegalMoves([]);
+      return;
+    }
+
+    // If no square is selected, check if clicked square has a piece belonging to current turn
+    const piece = gameState.getPiece(squareID);
+    if (
+      piece &&
+      gameState.getTurn() === (piece & 0b10000 ? "black" : "white")
+    ) {
+      // Set the square as selected and generate legal moves
+      setSelectedSquare({ row, col, squareID });
+      setLegalMoves(gameState.generateLegalMoves(squareID));
+    } else {
+      // If clicked square is not selectable, clear any selection
+      setSelectedSquare(null);
+      setLegalMoves([]);
+    }
   };
 
   const renderBoard = () => {
     const board = [];
-
-    for (let row = 0; row < 8; row++) {
+    // Iterate rows in reverse order
+    for (let row = 7; row >= 0; row--) {
       for (let col = 0; col < 8; col++) {
-        const squareColor =
-          (row + col) % 2 === 0 ? "lightSquare" : "darkSquare";
-        const isSelected = isSquareSelected(row, col);
         const squareID = `${squareTitles[col]}${row + 1}`;
         const pieceName = currentPosition[squareID];
-
+        const isSelected = selectedSquare?.squareID === squareID;
+        const isLegalMove = legalMoves.includes(squareID);
         board.push(
-          <div
+          <Square
             key={`${row}-${col}`}
-            className={`square ${squareColor} ${isSelected ? "selected" : ""}`}
-            onClick={() => handleSquareClick(row, col, squareID)}
-          >
-            {/* Render chess pieces or other content here if needed */}
-            <p className="piece">{piece.getPieceImage(pieceName)}</p>
-          </div>
+            row={row}
+            col={col}
+            pieceName={pieceName}
+            isSelected={isSelected}
+            isLegalMove={isLegalMove}
+            handleClick={() => handleSquareClick(row, col, squareID)}
+          />
         );
       }
     }
-
     return board;
   };
 
