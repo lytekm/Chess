@@ -9,7 +9,7 @@ const Square = ({
   isLegalMove,
   handleClick,
 }) => {
-  const squareColor = (row + col) % 2 === 0 ? "lightSquare" : "darkSquare";
+  const squareColor = (row + col) % 2 !== 0 ? "lightSquare" : "darkSquare";
   const piece = new Piece();
 
   return (

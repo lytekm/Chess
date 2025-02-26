@@ -4,6 +4,7 @@ import GameInfo from "./components/gameInfo/GameInfo";
 import GameState from "./components/board/gameState";
 import "./assests/board.css";
 import "./assests/main.css";
+import "./assests/game-info.css";
 
 const App = () => {
   // Create a GameState instance and pass it down to both ChessBoard and GameInfo.

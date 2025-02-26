@@ -1,14 +1,14 @@
 .chess-board {
     display: grid;
-    grid-template-columns: repeat(8, 100px);
-    grid-template-rows: repeat(8, 100px);
+    grid-template-columns: repeat(8, 110px);
+    grid-template-rows: repeat(8, 110px);
     width: 800px;
     height: 800px;
   }
   
   .square {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,46 +52,7 @@
     color: rgba(0, 0, 0, 0.7);
   }
 
-  .game-info {
-    padding: 10px;
-    border-left: 2px solid #ccc;
-    width: 200px; /* adjust as needed */
-  }
   
-  .turn-indicator {
-    margin-bottom: 10px;
-    font-size: 1.2em;
-  }
-  
-  .timers {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .timer-section {
-    font-size: 1em;
-  }
-  
-  .timer-display {
-    font-weight: bold;
-    margin-top: 4px;
-  }
-  
-  .move-history {
-    max-height: 200px;
-    overflow-y: auto;
-  }
-  
-  .winner-notification {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-    color: #155724;
-    text-align: center;
-  }
   
   
   

@@ -1,0 +1,91 @@
+.game-info {
+    padding: 15px;
+    background: #383838;
+    border-radius: 8px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    width: 100%;
+    height: calc(100vh - 65px);
+  }
+  
+  .game-info-grid {
+    display: flex;
+    gap: 20px;
+    height: 100%;
+  }
+  
+  .left-column,
+  .right-column {
+    flex: 1;
+  }
+
+  .left-column {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Timer container styling */
+  .timer-container {
+    background: #7d7d7d;
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .timer-container.active .timer {
+    background: #4caf50;
+    color: #fff;
+    border-radius: 4px;
+  }
+  
+  .timer {
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  /* Move history styling */
+  .right-column {
+    background: #7d7d7d;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .move-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: white;
+  }
+  
+  .move-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px;
+    border-bottom: 1px solid #555;
+  }
+  
+  .move-item {
+    flex: 1;
+    text-align: center;
+    padding: 4px;
+    background: #555;
+    border-radius: 4px;
+    margin: 0 2px;
+  }
+  
+  /* Winner notification */
+  .winner-notification {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    text-align: center;
+    border-radius: 8px;
+  }
+  
